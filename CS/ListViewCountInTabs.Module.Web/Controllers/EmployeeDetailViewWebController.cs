@@ -12,10 +12,12 @@ using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Templates;
 using DevExpress.ExpressApp.Utils;
+using DevExpress.ExpressApp.Web.Editors.ASPx;
 using DevExpress.ExpressApp.Web.Layout;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Validation;
 using DevExpress.Web;
+using DevExpress.Xpo;
 using ListViewCountInTabs.Module.Helpers;
 
 namespace ListViewCountInTabs.Module.Web.Controllers
@@ -24,6 +26,10 @@ namespace ListViewCountInTabs.Module.Web.Controllers
     public partial class EmployeeDetailViewWebController : ViewController<DetailView>
     {
         private ASPxPageControl pageControl;
+        private RecordsNavigationController recordsNavigationController;
+        private RefreshController refreshController;
+        private ASPxGridView tasksGrid;
+        private ASPxGridView phonesGrid;
         public EmployeeDetailViewWebController()
         {
             InitializeComponent();
@@ -36,6 +42,38 @@ namespace ListViewCountInTabs.Module.Web.Controllers
             View.DelayedItemsInitialization = false;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated += EmployeeDetailViewWebController_PageControlCreated;
             View.ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
+            recordsNavigationController = Frame.GetController<RecordsNavigationController>();
+            recordsNavigationController.NextObjectAction.Executed += RibbonAction_Executed;
+            recordsNavigationController.PreviousObjectAction.Executed += RibbonAction_Executed;
+            refreshController = Frame.GetController<RefreshController>();
+            refreshController.RefreshAction.Executed += RibbonAction_Executed;
+            View.CustomizeViewItemControl<ListPropertyEditor>(this, (editor) => {
+                editor.ListView.ControlsCreated += ListView_ControlsCreated;
+            });
+        }
+
+        private void ListView_ControlsCreated(object sender, EventArgs e)
+        {
+            ASPxGridListEditor gridListEditor = ((ListView)sender).Editor as ASPxGridListEditor;
+            if (gridListEditor != null)
+            {
+                if (gridListEditor.Grid != null)
+                {
+                    if (gridListEditor.Name == "Tasks")
+                    {
+                        tasksGrid = gridListEditor.Grid;
+                    }
+                    else if (gridListEditor.Name == "Phone Numbers")
+                    {
+                        phonesGrid = gridListEditor.Grid;
+                    }
+                }
+            }
+        }
+
+        private void RibbonAction_Executed(object sender, DevExpress.ExpressApp.Actions.ActionBaseEventArgs e)
+        {
+            UpdatePageControl();
         }
 
         private void ObjectSpace_ObjectChanged(object sender, ObjectChangedEventArgs e)
@@ -64,6 +102,9 @@ namespace ListViewCountInTabs.Module.Web.Controllers
             // Unsubscribe from previously subscribed events and release other references and resources.
             ((WebLayoutManager)View.LayoutManager).PageControlCreated -= EmployeeDetailViewWebController_PageControlCreated;
             View.ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
+            recordsNavigationController.NextObjectAction.Executed -= RibbonAction_Executed;
+            recordsNavigationController.PreviousObjectAction.Executed -= RibbonAction_Executed;
+            refreshController.RefreshAction.Executed -= RibbonAction_Executed;
             base.OnDeactivated();
         }
 
@@ -83,7 +124,34 @@ namespace ListViewCountInTabs.Module.Web.Controllers
                     ICollection collection = currentValue as ICollection;
                     if (collection != null)
                     {
-                        int count = collection.Count;
+                        int count = 0;
+
+                        if (tasksGrid == null || phonesGrid == null)
+                        {
+                            XPBaseCollection xpCollection = currentValue as XPBaseCollection;
+                            if ((xpCollection != null) && listEditor.MemberInfo.IsAssociation
+                                && !listEditor.MemberInfo.IsManyToMany)
+                            {
+                                if (xpCollection.IsLoaded)
+                                {
+                                    count = xpCollection.Count;
+                                }
+                                else
+                                {
+                                    count = View.ObjectSpace.GetObjectsCount(listEditor.MemberInfo.ListElementType,
+                                    CriteriaOperator.Parse($"[{listEditor.MemberInfo.AssociatedMemberInfo.Name}] = ?",
+                                    View.CurrentObject));
+                                }
+                            }
+                        }
+                        else if (listEditor.Id == "Tasks")
+                        {
+                            count = tasksGrid.VisibleRowCount;
+                        }
+                        else if (listEditor.Id == "PhoneNumbers")
+                        {
+                            count = phonesGrid.VisibleRowCount;
+                        }
 
                         tab.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text);
 

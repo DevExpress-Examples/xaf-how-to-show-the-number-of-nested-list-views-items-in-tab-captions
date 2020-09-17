@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Drawing;
+using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.SystemModule;
+using DevExpress.Xpo;
 using DevExpress.XtraLayout;
+using ListViewCountInTabs.Module.BusinessObjects;
 using ListViewCountInTabs.Module.Helpers;
 
 namespace ListViewCountInTabs.Module.Win.Controllers
@@ -12,6 +16,10 @@ namespace ListViewCountInTabs.Module.Win.Controllers
     public partial class EmployeeDetailViewWinController : ViewController<DetailView>
     {
         private LayoutControl layoutControl;
+        private RecordsNavigationController recordsNavigationController;
+        private RefreshController refreshController;
+        private ModificationsController modificationsController;
+
         public EmployeeDetailViewWinController()
         {
             InitializeComponent();
@@ -23,24 +31,51 @@ namespace ListViewCountInTabs.Module.Win.Controllers
             // Perform various tasks depending on the target View.
             View.DelayedItemsInitialization = false;
             View.ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
+            recordsNavigationController = Frame.GetController<RecordsNavigationController>();
+            recordsNavigationController.NextObjectAction.Executed += RibbonAction_Executed;
+            recordsNavigationController.PreviousObjectAction.Executed += RibbonAction_Executed;
+            refreshController = Frame.GetController<RefreshController>();
+            refreshController.RefreshAction.Executed += RibbonAction_Executed;
+            modificationsController = Frame.GetController<ModificationsController>();
+            modificationsController.CancelAction.Executed += RibbonAction_Executed;
+            View.CustomizeViewItemControl<ListPropertyEditor>(this, (editor) => {
+                editor.ListView.CurrentObjectChanged += ListView_CurrentObjectChanged;
+            });
+        }
+
+        private void ListView_CurrentObjectChanged(object sender, EventArgs e)
+        {
+            RefreshLayoutControl();
+        }
+
+        private void RibbonAction_Executed(object sender, DevExpress.ExpressApp.Actions.ActionBaseEventArgs e)
+        {
+            RefreshLayoutControl();
         }
 
         private void ObjectSpace_ObjectChanged(object sender, ObjectChangedEventArgs e)
         {
-            RefreshLayoutControl();
+            if (e.PropertyName == "AssignedTo" || e.PropertyName == null)
+            {
+                RefreshLayoutControl();
+            }
         }
 
         protected override void OnViewControlsCreated()
         {
             base.OnViewControlsCreated();
             // Access and customize the target View control.
-            RefreshLayoutControl();
+            //RefreshLayoutControl();
 
         }
         protected override void OnDeactivated()
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
             View.ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
+            recordsNavigationController.NextObjectAction.Executed -= RibbonAction_Executed;
+            recordsNavigationController.PreviousObjectAction.Executed -= RibbonAction_Executed;
+            refreshController.RefreshAction.Executed -= RibbonAction_Executed;
+            modificationsController.CancelAction.Executed -= RibbonAction_Executed;
             base.OnDeactivated();
         }
 
@@ -71,8 +106,24 @@ namespace ListViewCountInTabs.Module.Win.Controllers
                     ICollection collection = currentValue as ICollection;
                     if (collection != null)
                     {
-                        int count = collection.Count;
-                        
+                        int count = 0;
+
+                        XPBaseCollection xpCollection = currentValue as XPBaseCollection;
+                        if ((xpCollection != null) && propertyEditor.MemberInfo.IsAssociation
+                            && !propertyEditor.MemberInfo.IsManyToMany)
+                        {
+                            if (xpCollection.IsLoaded)
+                            {
+                                count = xpCollection.Count;
+                            }
+                            else
+                            {
+                                count = View.ObjectSpace.GetObjectsCount(propertyEditor.MemberInfo.ListElementType,
+                                CriteriaOperator.Parse($"[{propertyEditor.MemberInfo.AssociatedMemberInfo.Name}] = ?",
+                                View.CurrentObject));
+                            }
+                        }
+
                         layoutGroup.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(layoutGroup.Text);
 
                         if (count > 0)
