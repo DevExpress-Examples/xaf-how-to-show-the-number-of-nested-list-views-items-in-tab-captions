@@ -55,9 +55,13 @@ namespace ListViewCountInTabs.Module.Web.Controllers
                 {
                     bool isBold = false;
                     var tabCaption = gridsInTabs[grid.ID];
-                    var count = ((grid.DataSource as WebDataSource).Collection as ProxyCollection).Count;
-                    
+                    var count = 0;
+
                     if (DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text) != tabCaption) continue;
+
+                    var listPropertyEditor = View.FindItem(tabCaption.Replace(" ", "")) as ListPropertyEditor;
+                    if (listPropertyEditor != null)
+                        count = listPropertyEditor.ListView.CollectionSource.GetCount();
 
                     tab.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text);
 

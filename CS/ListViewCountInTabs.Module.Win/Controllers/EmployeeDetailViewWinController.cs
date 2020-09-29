@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Drawing;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Editors;
+using DevExpress.ExpressApp.Model;
 using DevExpress.ExpressApp.SystemModule;
+using DevExpress.ExpressApp.Win.Layout;
 using DevExpress.Xpo;
 using DevExpress.XtraLayout;
 using ListViewCountInTabs.Module.BusinessObjects;
@@ -15,11 +18,6 @@ namespace ListViewCountInTabs.Module.Win.Controllers
     // For more typical usage scenarios, be sure to check out https://documentation.devexpress.com/eXpressAppFramework/clsDevExpressExpressAppViewControllertopic.aspx.
     public partial class EmployeeDetailViewWinController : ViewController<DetailView>
     {
-        private LayoutControl layoutControl;
-        private RecordsNavigationController recordsNavigationController;
-        private RefreshController refreshController;
-        private ModificationsController modificationsController;
-
         public EmployeeDetailViewWinController()
         {
             InitializeComponent();
@@ -30,152 +28,116 @@ namespace ListViewCountInTabs.Module.Win.Controllers
             base.OnActivated();
             // Perform various tasks depending on the target View.
             View.DelayedItemsInitialization = false;
-            View.ObjectSpace.ObjectChanged += ObjectSpace_ObjectChanged;
-            recordsNavigationController = Frame.GetController<RecordsNavigationController>();
-            recordsNavigationController.NextObjectAction.Executed += RibbonAction_Executed;
-            recordsNavigationController.PreviousObjectAction.Executed += RibbonAction_Executed;
-            refreshController = Frame.GetController<RefreshController>();
-            refreshController.RefreshAction.Executed += RibbonAction_Executed;
-            modificationsController = Frame.GetController<ModificationsController>();
-            modificationsController.CancelAction.Executed += RibbonAction_Executed;
-            View.CustomizeViewItemControl<ListPropertyEditor>(this, (editor) => {
-                editor.ListView.CurrentObjectChanged += ListView_CurrentObjectChanged;
-            });
+            ((WinLayoutManager)View.LayoutManager).ItemCreated += DetailViewTabCountController_ItemCreated;
         }
 
-        private void ListView_CurrentObjectChanged(object sender, EventArgs e)
+        private void DetailViewTabCountController_ItemCreated(object sender, ItemCreatedEventArgs e)
         {
-            RefreshLayoutControl();
-        }
-
-        private void RibbonAction_Executed(object sender, DevExpress.ExpressApp.Actions.ActionBaseEventArgs e)
-        {
-            RefreshLayoutControl();
-        }
-
-        private void ObjectSpace_ObjectChanged(object sender, ObjectChangedEventArgs e)
-        {
-            if (e.PropertyName == "AssignedTo" || e.PropertyName == null)
+            if (e.Item is LayoutGroup layoutGroup && e.ModelLayoutElement.Parent is IModelTabbedGroup)
             {
-                RefreshLayoutControl();
+                foreach (IModelLayoutItem item in ((IModelLayoutGroup)e.ModelLayoutElement))
+                {
+                    IModelLayoutViewItem layoutViewItem = item as IModelLayoutViewItem;
+                    if (layoutViewItem == null) continue;
+                    ListPropertyEditor propertyEditor = View.FindItem(layoutViewItem.ViewItem.Id) as ListPropertyEditor;
+                    if (propertyEditor != null)
+                    {
+                        propertyEditor.Frame.GetController<NestedListViewTabCountController>().Initialize(layoutGroup);
+                    }
+                }
             }
         }
 
-        protected override void OnViewControlsCreated()
-        {
-            base.OnViewControlsCreated();
-            // Access and customize the target View control.
-            //RefreshLayoutControl();
-
-        }
         protected override void OnDeactivated()
         {
             // Unsubscribe from previously subscribed events and release other references and resources.
-            View.ObjectSpace.ObjectChanged -= ObjectSpace_ObjectChanged;
-            recordsNavigationController.NextObjectAction.Executed -= RibbonAction_Executed;
-            recordsNavigationController.PreviousObjectAction.Executed -= RibbonAction_Executed;
-            refreshController.RefreshAction.Executed -= RibbonAction_Executed;
-            modificationsController.CancelAction.Executed -= RibbonAction_Executed;
+            ((WinLayoutManager)View.LayoutManager).ItemCreated -= DetailViewTabCountController_ItemCreated;
             base.OnDeactivated();
         }
+    }
 
-        private void RefreshLayoutControl()
+    public class NestedListViewTabCountController : ViewController<ListView>
+    {
+        protected override void OnFrameAssigned()
         {
-            layoutControl = (LayoutControl)((DetailView)View).LayoutManager.Container;
-            UpdateTabs(layoutControl.Root, Application, (DetailView)View);
+            base.OnFrameAssigned();
+            Active["Context is NestedFrame"] = Frame.Context == TemplateContext.NestedFrame;
         }
-
-        public void UpdateTabs(LayoutItemContainer group, XafApplication application, DetailView view)
+        protected override void OnActivated()
         {
-            group.BeginUpdate();
-            LayoutGroup layoutGroup = group as LayoutGroup;
-            if ((layoutGroup != null) && layoutGroup.IsInTabbedGroup)
+            base.OnActivated();
+            UpdateLayoutGroupText();
+            View.CollectionSource.CollectionReloaded += CollectionSource_CollectionReloaded;
+            View.CollectionSource.CollectionChanged += CollectionSource_CollectionChanged;
+            SubscribeToListChanged();
+        }
+        private LayoutGroup layoutGroup;
+        public void Initialize(LayoutGroup layoutGroup)
+        {
+            this.layoutGroup = layoutGroup;
+            UpdateLayoutGroupText();
+        }
+        private void UpdateLayoutGroupText()
+        {
+            if (layoutGroup != null)
             {
-                bool isBold = false;
-                foreach (BaseLayoutItem item in layoutGroup.Items)
+                int count = View.CollectionSource.GetCount();
+                layoutGroup.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(layoutGroup.Text);
+                if (count > 0)
                 {
-                    LayoutControlItem layoutControlItem = item as LayoutControlItem;
-                    if (layoutControlItem == null) continue;
-                    
-                    PropertyEditor propertyEditor = FindPropertyEditor(view, layoutControlItem.Control);
-                    if (propertyEditor == null) continue;
-                    
-                    object currentValue = propertyEditor.MemberInfo.GetValue(propertyEditor.CurrentObject);
-                    if (currentValue == null) continue;
-                    
-                    ICollection collection = currentValue as ICollection;
-                    if (collection != null)
-                    {
-                        int count = 0;
-
-                        XPBaseCollection xpCollection = currentValue as XPBaseCollection;
-                        if ((xpCollection != null) && propertyEditor.MemberInfo.IsAssociation
-                            && !propertyEditor.MemberInfo.IsManyToMany)
-                        {
-                            if (xpCollection.IsLoaded)
-                            {
-                                count = xpCollection.Count;
-                            }
-                            else
-                            {
-                                count = View.ObjectSpace.GetObjectsCount(propertyEditor.MemberInfo.ListElementType,
-                                CriteriaOperator.Parse($"[{propertyEditor.MemberInfo.AssociatedMemberInfo.Name}] = ?",
-                                View.CurrentObject));
-                            }
-                        }
-
-                        layoutGroup.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(layoutGroup.Text);
-
-                        if (count > 0)
-                        {
-                            isBold = true;
-                            layoutGroup.Text += " (" + count + ")";
-                        }
-                    }
-                }
-                HighlightTabs(layoutGroup, isBold);
-            }
-            IEnumerable items;
-            if (group is TabbedGroup)
-            {
-                items = ((TabbedGroup)group).TabPages;
-            }
-            else
-            {
-                items = ((LayoutGroup)group).Items;
-            }
-            foreach (BaseLayoutItem item in items)
-            {
-                if (item is LayoutItemContainer)
-                {
-                    UpdateTabs((LayoutItemContainer)item, application, view);
+                    layoutGroup.Text += " (" + count + ")";
                 }
             }
-            group.EndUpdate();
         }
-
-        private PropertyEditor FindPropertyEditor(DetailView view, System.Windows.Forms.Control control)
+        private void CollectionSource_CollectionReloaded(object sender, EventArgs e)
         {
-            foreach (PropertyEditor pe in view.GetItems<PropertyEditor>())
-            {
-                if (Equals(control, pe.Control)) return pe;
-            }
-            return null;
+            UpdateLayoutGroupText();
         }
-
-        private void HighlightTabs(LayoutGroup layoutGroup, bool isBold)
+        private void CollectionSource_CollectionChanged(object sender, EventArgs e)
         {
-            Font font = layoutGroup.AppearanceTabPage.Header.Font;
-            if (isBold)
+            UpdateLayoutGroupText();
+            SubscribeToListChanged();
+        }
+        private void CollectionSourceBindingList_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            UpdateLayoutGroupText();
+        }
+        private void SubscribeToListChanged()
+        {
+            if (View.CollectionSource.Collection is IBindingList)
             {
-                layoutGroup.AppearanceTabPage.Header.Font = new Font(font, FontStyle.Bold);
-                layoutGroup.AppearanceTabPage.HeaderHotTracked.Font = new Font(font, FontStyle.Bold);
+                ((IBindingList)View.CollectionSource.Collection).ListChanged += CollectionSourceBindingList_ListChanged;
             }
-            else
+            else if (View.CollectionSource.Collection is IListSource)
             {
-                layoutGroup.AppearanceTabPage.Header.Font = new Font(font, FontStyle.Regular);
-                layoutGroup.AppearanceTabPage.HeaderHotTracked.Font = new Font(font, FontStyle.Regular);
+                IBindingList innerList = ((IListSource)View.CollectionSource.Collection).GetList() as IBindingList;
+                if (innerList != null)
+                {
+                    ((IBindingList)innerList).ListChanged += CollectionSourceBindingList_ListChanged;
+                }
             }
+        }
+        private void UnsubscribeFromListChanged()
+        {
+            if (View.CollectionSource.Collection is IBindingList)
+            {
+                ((IBindingList)View.CollectionSource.Collection).ListChanged -= CollectionSourceBindingList_ListChanged;
+            }
+            else if (View.CollectionSource.Collection is IListSource)
+            {
+                IBindingList innerList = ((IListSource)View.CollectionSource.Collection).GetList() as IBindingList;
+                if (innerList != null)
+                {
+                    ((IBindingList)innerList).ListChanged -= CollectionSourceBindingList_ListChanged;
+                }
+            }
+        }
+        protected override void OnDeactivated()
+        {
+            base.OnDeactivated();
+            View.CollectionSource.CollectionReloaded -= CollectionSource_CollectionReloaded;
+            View.CollectionSource.CollectionChanged -= CollectionSource_CollectionChanged;
+            UnsubscribeFromListChanged();
         }
     }
 }
