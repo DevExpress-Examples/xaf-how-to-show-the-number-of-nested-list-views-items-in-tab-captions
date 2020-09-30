@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <RootNamespace></RootNamespace>
+        <Deterministic>False</Deterministic>
+        <OptionExplicit>On</OptionExplicit>
+        <OptionCompare>Binary</OptionCompare>
+        <OptionStrict>Off</OptionStrict>
+        <OptionInfer>On</OptionInfer>
+    </PropertyGroup>
+    <ItemGroup>
+      <Import Include="Microsoft.VisualBasic" />
+      <Import Include="System.Collections.Generic" />
+      <Import Include="System.Collections" />
+      <Import Include="System.Diagnostics" />
+      <Import Include="System" />
+    </ItemGroup>
+    <ItemGroup>
+		<None Remove="Model.xafml" />
+	  </ItemGroup>
+	  <ItemGroup>
+		<Content Include="Model.xafml">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="DevExpress.ExpressApp" Version="20.1.7" />
+        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.7-ctp" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.1" />
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+        <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\DetailViewTabCountVB.Module.Win\DetailViewTabCountVB.Module.Win.vbproj" />
+        <ProjectReference Include="..\..\..\Module\VB\DetailViewTabCountVB.Module\DetailViewTabCountVB.Module.vbproj" />
+    </ItemGroup>
+</Project>
