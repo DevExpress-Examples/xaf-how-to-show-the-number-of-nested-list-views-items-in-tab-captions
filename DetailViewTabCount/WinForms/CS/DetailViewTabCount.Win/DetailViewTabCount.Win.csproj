@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <RootNamespace>DetailViewTabCount.Win</RootNamespace>
+        <Deterministic>False</Deterministic>
+    </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="**\*.svg" />
+        <EmbeddedResource Include="**\*.xafml" />
+        <EmbeddedResource Remove="bin\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="DevExpress.ExpressApp" Version="20.1.7" />
+        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.7-ctp" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.1" />
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+        <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\DetailViewTabCount.Module.Win\DetailViewTabCount.Module.Win.csproj" />
+        <ProjectReference Include="..\..\..\Module\CS\DetailViewTabCount.Module\DetailViewTabCount.Module.csproj" />
+    </ItemGroup>
+</Project>

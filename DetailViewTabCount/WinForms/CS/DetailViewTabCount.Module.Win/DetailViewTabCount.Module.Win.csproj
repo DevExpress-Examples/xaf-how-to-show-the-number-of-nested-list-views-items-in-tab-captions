@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <RootNamespace>DetailViewTabCount.Module.Win</RootNamespace>
+        <Deterministic>False</Deterministic>
+    </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="**\*.svg" />
+        <EmbeddedResource Include="**\*.xafml" />
+        <EmbeddedResource Remove="bin\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="DevExpress.ExpressApp" Version="20.1.7" />
+      <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.7-ctp" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Module\CS\DetailViewTabCount.Module\DetailViewTabCount.Module.csproj" />
+    </ItemGroup>
+</Project>
