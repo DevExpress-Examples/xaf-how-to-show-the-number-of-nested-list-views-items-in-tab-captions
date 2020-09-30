@@ -9,10 +9,11 @@
         <Deterministic>False</Deterministic>
     </PropertyGroup>
     <ItemGroup>
-        <EmbeddedResource Include="**\*.svg" />
-        <EmbeddedResource Include="**\*.xafml" />
-        <EmbeddedResource Remove="bin\**" />
-    </ItemGroup>
+		<None Remove="Model.DesignedDiffs.xafml" />
+	  </ItemGroup>
+	  <ItemGroup>
+		<EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+	  </ItemGroup>
     <ItemGroup>
       <PackageReference Include="DevExpress.ExpressApp" Version="20.1.7" />
       <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.7-ctp" />
