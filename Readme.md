@@ -1,18 +1,7 @@
 # XAF - How to show the number of a nested ListView's items in tab captions
 
-In this example, we demonstrate how to show the number of nested ListViews' items in tab captions. This is done in the platfrom-dependent controllers: the [EmployeeDetailViewWinController.cs](./CS/ListViewCountInTabs.Module.Win/Controllers/EmployeeDetailViewWinController.cs) for the WinForms application and the [EmployeeDetailViewWebController.cs](./CS/ListViewCountInTabs.Module.Web/Controllers/EmployeeDetailViewWebController.cs) for the WebForms application. Follow the steps listed below to accomplish this task:
-1. Create controllers in the WinForms and WebForms module projects.
-2. In the **Properties** window for the controller, set the **TargetViewType** property to the **DetailView** and the **TargetObjectType** to your business object type. As a result, the controller will only be activated in detail forms for your business objects.
-3. In the **OnActivated** method, set the [CompositeView.DelayedItemsInitialization](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CompositeView.DelayedItemsInitialization) to **false** to initialize all View Item controls immediately when the Detail View is created. This will allow you to obtain the number of ListView items.
-4. In the same method, handle the [IObjectSpace.ObjectChanged](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.IObjectSpace.ObjectChanged) event to update tab caption after you modify your business objects.
-5. Declare the [LayoutControl](https://docs.devexpress.com/WindowsForms/3407/controls-and-libraries/form-layout-managers/layout-and-data-layout-controls/layout-control/layout-control) and [ASPxPageControl](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxPageControl) private instances in your controllers.
-6. In WinForms controller, access the **LayoutControl** via the **CompositeView.LayoutManager.Container** property as described here: [Access the Layout Control](https://docs.devexpress.com/eXpressAppFramework/112817/concepts/ui-construction/view-items/view-items-layout-customization#access-the-layout-control). Save the control instance to your private property.
-7. In WebForms controller, handle the **CompositeView.LayoutManager.PageControlCreated** event and access **ASPxPageControl** as demonstrated in this example: [How to access a tab control in a Detail View layout](https://github.com/DevExpress-Examples/XAF_how-to-access-a-tab-control-in-a-detail-view-layout-e372). Save the control instance to your private property.
-8. Loop through the [View Items](https://docs.devexpress.com/eXpressAppFramework/112612/concepts/ui-construction/view-items) in the **CompositeView.ViewControlsCreated** and **IObjectSpace.ObjectChanged** event handlers to access *ListPropertyEditors*. Then, use the **ListPropertyEditor.MemberInfo.GetValue** to get the collection of editor's items and evaluate the nubmer of items. Finally, update tab captions in the editors accordingly. For more details, review the implementations of the following methods in this example: [UpdateTabs](./CS/ListViewCountInTabs.Module.Win/Controllers/EmployeeDetailViewWinController.cs#L53) and [UpdatePageControl](./CS/ListViewCountInTabs.Module.Web/Controllers/EmployeeDetailViewWebController.cs#L70)
-
-<!-- default file list -->
-*Files to look at*:
-
-* [EmployeeDetailViewWebController.cs](./CS/ListViewCountInTabs.Module.Web/Controllers/EmployeeDetailViewWebController.cs)
-* [EmployeeDetailViewWinController.cs](./CS/ListViewCountInTabs.Module.Win/Controllers/EmployeeDetailViewWinController.cs)
-<!-- default file list end -->
+In this example, we demonstrate how to show the number of nested ListViews' items in tab captions. This is done in the platfrom-dependent controllers: the [EmployeeDetailViewWinController.cs](./DetailViewTabCount/WinForms/CS/DetailViewTabCount.Module.Win/Controllers/EmployeeDetailViewWinController.cs) for the WinForms application, the [EmployeeDetailViewWebController.cs](./DetailViewTabCount/ASP.NET/WebForms/CS/DetailViewTabCount.Module.Web/Controllers/EmployeeDetailViewWebController.cs) for the ASP.NET WebForms application, and the [EmployeeDetailViewBlazorController.cs](./DetailViewTabCount/ASP.NET/Blazor/DetailViewTabCount.Module.Blazor/Controllers/EmployeeDetailViewBlazorController.cs) for the ASP.NET Core Blazor application. For implementation details, refer to the following links:
+* [Module](./DetailViewTabCount/Module) 
+* [WinForms](./DetailViewTabCount/WinForms) 
+* [ASP.NET WebForms](./DetailViewTabCount/ASP.NET/WebForms) 
+* [ASP.NET Core Blazor](./DetailViewTabCount/ASP.NET/Blazor) 
