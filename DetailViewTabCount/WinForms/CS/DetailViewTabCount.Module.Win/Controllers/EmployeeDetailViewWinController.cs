@@ -59,6 +59,7 @@ namespace DetailViewTabCount.Module.Win.Controllers
             UpdateLayoutGroupText();
             View.CollectionSource.CollectionReloaded += CollectionSource_CollectionReloaded;
             View.CollectionSource.CollectionChanged += CollectionSource_CollectionChanged;
+            View.CollectionSource.CollectionChanging += CollectionSource_CollectionChanging;
             SubscribeToListChanged();
         }
         private LayoutGroup layoutGroup;
@@ -88,6 +89,11 @@ namespace DetailViewTabCount.Module.Win.Controllers
             UpdateLayoutGroupText();
             SubscribeToListChanged();
         }
+        private void CollectionSource_CollectionChanging(object sender, EventArgs e)
+        {
+            UnsubscribeFromListChanged();
+        }
+
         private void CollectionSourceBindingList_ListChanged(object sender, ListChangedEventArgs e)
         {
             UpdateLayoutGroupText();
@@ -127,6 +133,7 @@ namespace DetailViewTabCount.Module.Win.Controllers
             base.OnDeactivated();
             View.CollectionSource.CollectionReloaded -= CollectionSource_CollectionReloaded;
             View.CollectionSource.CollectionChanged -= CollectionSource_CollectionChanged;
+            View.CollectionSource.CollectionChanging -= CollectionSource_CollectionChanging;
             UnsubscribeFromListChanged();
         }
     }

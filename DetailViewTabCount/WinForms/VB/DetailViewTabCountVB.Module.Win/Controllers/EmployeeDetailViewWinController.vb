@@ -52,6 +52,7 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
             UpdateLayoutGroupText()
             AddHandler View.CollectionSource.CollectionReloaded, AddressOf CollectionSource_CollectionReloaded
             AddHandler View.CollectionSource.CollectionChanged, AddressOf CollectionSource_CollectionChanged
+            AddHandler View.CollectionSource.CollectionChanging, AddressOf CollectionSource_CollectionChanging
             SubscribeToListChanged()
         End Sub
         Private layoutGroup As LayoutGroup
@@ -74,6 +75,9 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
         Private Sub CollectionSource_CollectionChanged(ByVal sender As Object, ByVal e As EventArgs)
             UpdateLayoutGroupText()
             SubscribeToListChanged()
+        End Sub
+        Private Sub CollectionSource_CollectionChanging(ByVal sender As Object, ByVal e As EventArgs)
+            UnsubscribeFromListChanged()
         End Sub
         Private Sub CollectionSourceBindingList_ListChanged(ByVal sender As Object, ByVal e As ListChangedEventArgs)
             UpdateLayoutGroupText()
@@ -102,6 +106,7 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
             MyBase.OnDeactivated()
             RemoveHandler View.CollectionSource.CollectionReloaded, AddressOf CollectionSource_CollectionReloaded
             RemoveHandler View.CollectionSource.CollectionChanged, AddressOf CollectionSource_CollectionChanged
+            RemoveHandler View.CollectionSource.CollectionChanging, AddressOf CollectionSource_CollectionChanging
             UnsubscribeFromListChanged()
         End Sub
     End Class
