@@ -2,6 +2,7 @@
 using DetailViewTabCount.Module.BusinessObjects;
 using DetailViewTabCount.Module.Helpers;
 using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.Blazor.Editors;
 
 namespace DetailViewTabCount.Module.Blazor.Controllers
 {
@@ -26,21 +27,15 @@ namespace DetailViewTabCount.Module.Blazor.Controllers
 
         private void RefreshTabCaptions()
         {
-            foreach (var item in View.Items)
+            foreach (var item in View.GetItems<BlazorListPropertyEditor>())
             {
-                var listPropertyEditor = item as DevExpress.ExpressApp.Blazor.Editors.BlazorListPropertyEditor;
-                if (listPropertyEditor != null)
+                if (item.MemberInfo.GetValue(item.CurrentObject) is ICollection collection)
                 {
-                    var collection = listPropertyEditor.MemberInfo.GetValue(item.CurrentObject);
-                    if (collection != null && collection is ICollection)
+                    item.Caption = DetailViewControllerHelper.ClearItemCountInTabCaption(item.Caption);
+                    int count = collection.Count;
+                    if (count > 0)
                     {
-                        listPropertyEditor.Caption = DetailViewControllerHelper.ClearItemCountInTabCaption(listPropertyEditor.Caption);
-                        int count = (collection as ICollection).Count;
-
-                        if (count > 0)
-                        {
-                            listPropertyEditor.Caption = $"{item.Caption} ({count})";
-                        }
+                        item.Caption = $"{item.Caption} ({count})";
                     }
                 }
             }
