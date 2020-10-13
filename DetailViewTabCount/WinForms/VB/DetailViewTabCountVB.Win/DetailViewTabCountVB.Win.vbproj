@@ -36,6 +36,5 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\DetailViewTabCountVB.Module.Win\DetailViewTabCountVB.Module.Win.vbproj" />
-        <ProjectReference Include="..\..\..\Module\VB\DetailViewTabCountVB.Module\DetailViewTabCountVB.Module.vbproj" />
     </ItemGroup>
 </Project>
