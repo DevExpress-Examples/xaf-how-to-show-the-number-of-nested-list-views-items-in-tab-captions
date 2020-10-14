@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Module\VB\DetailViewTabCountVB.Module\DetailViewTabCountVB.Module.vbproj">
-      <Project>{c221ff8a-bc3b-49de-be48-7f4819250174}</Project>
+      <Project>{c939bf70-3596-4ec7-bfc3-1db01a784565}</Project>
       <Name>DetailViewTabCountVB.Module</Name>
     </ProjectReference>
   </ItemGroup>

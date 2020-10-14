@@ -29,4 +29,7 @@
       <PackageReference Include="DevExpress.ExpressApp" Version="20.1.7" />
       <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.7-ctp" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Module\VB\DetailViewTabCountVB.Module\DetailViewTabCountVB.Module.vbproj" />
+    </ItemGroup>
 </Project>
