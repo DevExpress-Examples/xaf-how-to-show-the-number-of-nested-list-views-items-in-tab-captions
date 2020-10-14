@@ -11,7 +11,7 @@ using DevExpress.Web;
 
 namespace DetailViewTabCount.Module.Web.Controllers
 {
-    partial class EmployeeDetailViewWebController : ViewController<DetailView>
+    public partial class EmployeeDetailViewWebController : ViewController<DetailView>
     {
         private ASPxPageControl pageControl;
 
@@ -27,27 +27,6 @@ namespace DetailViewTabCount.Module.Web.Controllers
             View.CurrentObjectChanged += View_CurrentObjectChanged;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated += EmployeeDetailViewWebController_PageControlCreated;
             WebWindow.CurrentRequestWindow.PagePreRender += CurrentRequestWindow_PagePreRender;
-            View.CustomizeViewItemControl<ListPropertyEditor>(this, (editor) =>
-            {
-                editor.ListView.ControlsCreated += ListView_ControlsCreated;
-            });
-        }
-
-        private void ListView_ControlsCreated(object sender, EventArgs e)
-        {
-            ASPxGridListEditor gridListEditor = ((ListView)sender).Editor as ASPxGridListEditor;
-            if (gridListEditor != null)
-            {
-                if (gridListEditor.Grid != null)
-                {
-                    gridListEditor.Grid.BeforeGetCallbackResult += Grid_BeforeGetCallbackResult; ;
-                }
-            }
-        }
-
-        private void Grid_BeforeGetCallbackResult(object sender, EventArgs e)
-        {
-            UpdatePageControl(pageControl);
         }
 
         private void CurrentRequestWindow_PagePreRender(object sender, EventArgs e)
@@ -60,9 +39,6 @@ namespace DetailViewTabCount.Module.Web.Controllers
             View.CurrentObjectChanged -= View_CurrentObjectChanged;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated -= EmployeeDetailViewWebController_PageControlCreated;
             WebWindow.CurrentRequestWindow.PagePreRender -= CurrentRequestWindow_PagePreRender;
-            View.CustomizeViewItemControl<ListPropertyEditor>(this, (editor) => {
-                editor.ListView.ControlsCreated -= ListView_ControlsCreated;
-            });
             base.OnDeactivated();
         }
         protected override void OnViewControlsDestroying()
@@ -95,16 +71,15 @@ namespace DetailViewTabCount.Module.Web.Controllers
                 if (listPropertyEditor != null)
                 {
                     var count = listPropertyEditor.ListView.CollectionSource.GetCount();
-                    tab.TabStyle.Font.Bold = false;
                     if (count > 0)
                     {
-                        tab.TabStyle.Font.Bold = true;
                         tab.Text += " (" + count + ")";
                     }
                     if (listPropertyEditor.ListView.Editor is ASPxGridListEditor editor && editor.Grid != null)
                     {
                         editor.Grid.JSProperties["cpCaption"] = tab.Text;
                         ClientSideEventsHelper.AssignClientHandlerSafe(editor.Grid, "EndCallback", $"function(s, e) {{ " +
+                            $"if (!s.cpCaption) return;" +
                             $"var tab = {pageControl.ClientInstanceName}.GetTabByName('{tab.Name}');" +
                             $"tab.SetText(s.cpCaption);" +
                             $"delete s.cpCaption}}", nameof(EmployeeDetailViewWebController));

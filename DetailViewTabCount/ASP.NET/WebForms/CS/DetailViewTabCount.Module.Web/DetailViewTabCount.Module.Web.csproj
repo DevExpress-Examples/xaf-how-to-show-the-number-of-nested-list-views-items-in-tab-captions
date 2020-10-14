@@ -82,10 +82,6 @@
     <Compile Include="Controllers\EmployeeDetailViewWebController.Designer.cs">
       <DependentUpon>EmployeeDetailViewWebController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\PageControlUpdateController.cs" />
-    <Compile Include="Controllers\PageControlUpdateController.Designer.cs">
-      <DependentUpon>PageControlUpdateController.cs</DependentUpon>
-    </Compile>
     <Compile Include="WebModule.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -97,9 +93,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Controllers\EmployeeDetailViewWebController.resx">
       <DependentUpon>EmployeeDetailViewWebController.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\PageControlUpdateController.resx">
-      <DependentUpon>PageControlUpdateController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
