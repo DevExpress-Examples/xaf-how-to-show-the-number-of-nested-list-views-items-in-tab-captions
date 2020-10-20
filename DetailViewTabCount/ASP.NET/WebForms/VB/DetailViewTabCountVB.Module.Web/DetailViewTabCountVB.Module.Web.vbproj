@@ -76,6 +76,12 @@
     <Reference Include="DevExpress.Printing.v20.1.Core">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.Office.v20.1.Core">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v20.1.Core">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="DevExpress.Web.v20.1">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
