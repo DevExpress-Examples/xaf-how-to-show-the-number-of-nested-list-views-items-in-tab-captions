@@ -64,8 +64,10 @@ namespace DetailViewTabCount.Module.Web.Controllers
         }
         private void UpdatePageControl(ASPxPageControl pageControl)
         {
+            //loop through PageControl's tabs
             foreach (TabPage tab in pageControl.TabPages)
             {
+                //remove the item count from the tab caption
                 tab.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text);
                 var listPropertyEditor = View.FindItem(tab.Name) as ListPropertyEditor;
                 if (listPropertyEditor != null)
@@ -77,6 +79,7 @@ namespace DetailViewTabCount.Module.Web.Controllers
                     }
                     if (listPropertyEditor.ListView.Editor is ASPxGridListEditor editor && editor.Grid != null)
                     {
+                        //Assign the ASPxClientGridView.EndCallback event hander. This is required for inline editing
                         editor.Grid.JSProperties["cpCaption"] = tab.Text;
                         ClientSideEventsHelper.AssignClientHandlerSafe(editor.Grid, "EndCallback", $"function(s, e) {{ " +
                             $"if (!s.cpCaption) return;" +

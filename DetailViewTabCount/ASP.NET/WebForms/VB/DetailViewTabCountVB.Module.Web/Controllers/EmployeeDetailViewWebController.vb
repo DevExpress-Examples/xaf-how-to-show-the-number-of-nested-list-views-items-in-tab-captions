@@ -58,8 +58,11 @@ Namespace DetailViewTabCountVB.Module.Web.Controllers
         End Sub
 
         Private Sub UpdatePageControl(ByVal pageControl As ASPxPageControl)
+            'loop through PageControl's tabs
             For Each tab As TabPage In pageControl.TabPages
+                'remove the item count from the tab caption
                 tab.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text)
+
                 Dim listPropertyEditor = TryCast(View.FindItem(tab.Name), ListPropertyEditor)
 
                 If listPropertyEditor IsNot Nothing Then
@@ -70,6 +73,8 @@ Namespace DetailViewTabCountVB.Module.Web.Controllers
                     End If
                     If TypeOf listPropertyEditor.ListView.Editor Is ASPxGridListEditor AndAlso DirectCast(listPropertyEditor.ListView.Editor, ASPxGridListEditor).Grid IsNot Nothing Then
                         Dim editor = DirectCast(listPropertyEditor.ListView.Editor, ASPxGridListEditor)
+
+                        'Assign the ASPxClientGridView.EndCallback event hander. This is required for inline editing
                         editor.Grid.JSProperties("cpCaption") = tab.Text
                         ClientSideEventsHelper.AssignClientHandlerSafe(editor.Grid, "EndCallback", $"function(s, e) {{ 
                         if (!s.cpCaption) return;
