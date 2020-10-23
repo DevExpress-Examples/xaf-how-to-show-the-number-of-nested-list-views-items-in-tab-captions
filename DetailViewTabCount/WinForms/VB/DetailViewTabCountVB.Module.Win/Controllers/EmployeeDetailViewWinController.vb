@@ -42,10 +42,8 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
 
     Public Class NestedListViewTabCountController
         Inherits ViewController(Of ListView)
-
-        Protected Overrides Sub OnFrameAssigned()
-            MyBase.OnFrameAssigned()
-            Active("Context is NestedFrame") = Frame.Context = TemplateContext.NestedFrame
+        Public Sub New()
+            TargetViewNesting = Nesting.Nested
         End Sub
         Protected Overrides Sub OnActivated()
             MyBase.OnActivated()

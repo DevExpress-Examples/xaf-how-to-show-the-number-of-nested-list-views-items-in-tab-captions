@@ -48,10 +48,9 @@ namespace DetailViewTabCount.Module.Win.Controllers
 
     public class NestedListViewTabCountController : ViewController<ListView>
     {
-        protected override void OnFrameAssigned()
+        public NestedListViewTabCountController()
         {
-            base.OnFrameAssigned();
-            Active["Context is NestedFrame"] = Frame.Context == TemplateContext.NestedFrame;
+            TargetViewNesting = Nesting.Nested;
         }
         protected override void OnActivated()
         {
