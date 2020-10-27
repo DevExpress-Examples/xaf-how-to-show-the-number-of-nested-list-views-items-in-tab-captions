@@ -1,6 +1,6 @@
 # XAF for Blazor - How to show the number of nested List Views' items in tab captions
 
->At the moment, tab captions are not updated immediately after the ListView item count is modified.
+>At the moment, tab captions are not updated immediately after the List View item count is modified.
 
 In this example, we demonstrate how to show the number of nested List Views' items in tab captions. This is done in the following controller: [EmployeeDetailViewController.cs](./DetailViewTabCount.Module.Blazor/Controllers/EmployeeDetailViewBlazorController.cs). Follow the steps listed below to accomplish this task:
 1. Create a controllers in the Blazor module project.
