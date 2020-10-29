@@ -1,6 +1,6 @@
-# XAF - How to show the number of nested List Views' items in tab captions
+# XAF - How to show the number of nested List View items in tab captions
 
-In this example, we demonstrate how to show the number of nested List Views' items in tab captions in WinForms applications. We use a platform-dependent controller: [EmployeeDetailViewWinController.cs](./CS/DetailViewTabCount.Module.Win/Controllers/EmployeeDetailViewWinController.cs). Follow the steps listed below to accomplish this task:
+In this example, we demonstrate how to show the number of nested List View items in tab captions in WinForms applications. We use a platform-dependent controller: [EmployeeDetailViewWinController.cs](./CS/DetailViewTabCount.Module.Win/Controllers/EmployeeDetailViewWinController.cs). Follow the steps listed below to accomplish this task:
 
 1. Create a controller for Nested List Views in the WinForms module project. To activate it only for nested List Views, set the [ViewController.TargetViewNesting](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.ViewController.TargetViewNesting) property to "Nesting.Nested".
 2. In the **OnActivated** method, handle CollectionsSource's [CollectionReloaded](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CollectionSourceBase.CollectionReloaded), [CollectionChanged](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CollectionSourceBase.CollectionChanged) and [XPBaseCollection.ListChanged](https://docs.devexpress.com/XPO/DevExpress.Xpo.XPBaseCollection.ListChanged) events. In these event handlers, update tab captions using the [BaseLayoutItem.Text](https://docs.devexpress.com/WindowsForms/DevExpress.XtraLayout.BaseLayoutItem.Text) property.
