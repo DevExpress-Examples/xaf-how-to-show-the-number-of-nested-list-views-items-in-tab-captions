@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using DetailViewTabCount.Module.BusinessObjects;
 using DetailViewTabCount.Module.Helpers;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Editors;
@@ -9,19 +9,11 @@ using DevExpress.ExpressApp.Web.Layout;
 using DevExpress.ExpressApp.Web.Utils;
 using DevExpress.Web;
 
-namespace DetailViewTabCount.Module.Web.Controllers
-{
-    public partial class EmployeeDetailViewWebController : ViewController<DetailView>
-    {
+namespace DetailViewTabCount.Module.Web.Controllers {
+    public class EmployeeDetailViewWebController : ObjectViewController<DetailView, Employee> {
         private ASPxPageControl pageControl;
 
-        public EmployeeDetailViewWebController()
-        {
-            InitializeComponent();
-        }
-
-        protected override void OnActivated()
-        {
+        protected override void OnActivated() {
             base.OnActivated();
             View.DelayedItemsInitialization = false;
             View.CurrentObjectChanged += View_CurrentObjectChanged;
@@ -29,56 +21,45 @@ namespace DetailViewTabCount.Module.Web.Controllers
             WebWindow.CurrentRequestWindow.PagePreRender += CurrentRequestWindow_PagePreRender;
         }
 
-        private void CurrentRequestWindow_PagePreRender(object sender, EventArgs e)
-        {
-            if (pageControl != null) UpdatePageControl(pageControl);
+        private void CurrentRequestWindow_PagePreRender(object sender, EventArgs e) {
+            if(pageControl != null)
+                UpdatePageControl(pageControl);
         }
 
-        protected override void OnDeactivated()
-        {
+        protected override void OnDeactivated() {
             View.CurrentObjectChanged -= View_CurrentObjectChanged;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated -= EmployeeDetailViewWebController_PageControlCreated;
             WebWindow.CurrentRequestWindow.PagePreRender -= CurrentRequestWindow_PagePreRender;
             base.OnDeactivated();
         }
-        protected override void OnViewControlsDestroying()
-        {
+        protected override void OnViewControlsDestroying() {
             pageControl = null;
             base.OnViewControlsDestroying();
         }
-        private void EmployeeDetailViewWebController_PageControlCreated(object sender, PageControlCreatedEventArgs e)
-        {
+        private void EmployeeDetailViewWebController_PageControlCreated(object sender, PageControlCreatedEventArgs e) {
             // Check this Id in the AppName.Module/Model.DesignedDiffs.xafml file
-            if (e.Model.Id == "Tabs")
-            {
+            if(e.Model.Id == "Tabs") {
                 pageControl = e.PageControl;
                 pageControl.ClientInstanceName = "pageControl";
             }
         }
-        private void View_CurrentObjectChanged(object sender, EventArgs e)
-        {
-            if (pageControl != null)
-            {
+        private void View_CurrentObjectChanged(object sender, EventArgs e) {
+            if(pageControl != null) {
                 UpdatePageControl(pageControl);
             }
         }
-        private void UpdatePageControl(ASPxPageControl pageControl)
-        {
+        private void UpdatePageControl(ASPxPageControl pageControl) {
             //loop through PageControl's tabs
-            foreach (TabPage tab in pageControl.TabPages)
-            {
+            foreach(TabPage tab in pageControl.TabPages) {
                 //remove the item count from the tab caption
                 tab.Text = DetailViewControllerHelper.ClearItemCountInTabCaption(tab.Text);
                 var listPropertyEditor = View.FindItem(tab.Name) as ListPropertyEditor;
-                if (listPropertyEditor != null)
-                {
+                if(listPropertyEditor != null) {
                     var count = listPropertyEditor.ListView.CollectionSource.GetCount();
-                    if (count > 0)
-                    {
+                    if(count > 0) {
                         tab.Text += " (" + count + ")";
                     }
-                    if (listPropertyEditor.ListView.Editor is ASPxGridListEditor editor && editor.Grid != null)
-                    {
+                    if(listPropertyEditor.ListView.Editor is ASPxGridListEditor editor && editor.Grid != null) {
                         //Assign the ASPxClientGridView.EndCallback event hander. This is required for inline editing
                         editor.Grid.JSProperties["cpCaption"] = tab.Text;
                         ClientSideEventsHelper.AssignClientHandlerSafe(editor.Grid, "EndCallback", $"function(s, e) {{ " +

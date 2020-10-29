@@ -6,12 +6,9 @@ Imports DevExpress.ExpressApp.Win.Layout
 Imports DevExpress.XtraLayout
 
 Namespace DetailViewTabCountVB.Module.Win.Controllers
-    Partial Public Class EmployeeDetailViewWinController
-        Inherits ViewController(Of DetailView)
+    Public Class EmployeeDetailViewWinController
+        Inherits ObjectViewController(Of DetailView, Employee)
 
-        Public Sub New()
-            InitializeComponent()
-        End Sub
         Protected Overrides Sub OnActivated()
             MyBase.OnActivated()
             View.DelayedItemsInitialization = False

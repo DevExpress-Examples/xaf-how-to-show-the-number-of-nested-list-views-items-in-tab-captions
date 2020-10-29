@@ -9,14 +9,10 @@ Imports DevExpress.ExpressApp.Web.Utils
 Imports DevExpress.Web
 
 Namespace DetailViewTabCountVB.Module.Web.Controllers
-    Partial Public Class EmployeeDetailViewWebController
-        Inherits ViewController(Of DetailView)
+    Public Class EmployeeDetailViewWebController
+        Inherits ObjectViewController(Of DetailView, Employee)
 
         Private pageControl As ASPxPageControl
-
-        Public Sub New()
-            InitializeComponent()
-        End Sub
 
         Protected Overrides Sub OnActivated()
             MyBase.OnActivated()
@@ -86,5 +82,4 @@ Namespace DetailViewTabCountVB.Module.Web.Controllers
             Next
         End Sub
     End Class
-
 End Namespace
