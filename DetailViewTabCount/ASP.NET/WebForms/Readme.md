@@ -1,6 +1,6 @@
-# XAF - How to show the number of nested ListViews' items in tab captions
+# XAF - How to show the number of nested ListView items in tab captions
 
-In this example, we demonstrate how to show the number of nested List Views' items in tab captions in ASP.NET Web Forms applications. We use a platform-dependent controller: [EmployeeDetailViewWebController.cs](./CS/DetailViewTabCount.Module.Web/Controllers/EmployeeDetailViewWebController.cs). Follow the steps listed below to accomplish this task:
+In this example, we demonstrate how to show the number of nested List View items in tab captions in ASP.NET Web Forms applications. We use a platform-dependent controller: [EmployeeDetailViewWebController.cs](./CS/DetailViewTabCount.Module.Web/Controllers/EmployeeDetailViewWebController.cs). Follow the steps listed below to accomplish this task:
 1. Create a controller in the WebForms module project.
 2. To activate this controller only in particular Detail Views, specify its **TargetViewId** property.
 3. In the **OnActivated** method, set [CompositeView.DelayedItemsInitialization](https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.CompositeView.DelayedItemsInitialization) to **false** to initialize all View Item controls immediately when your Detail View is created. This is required to access a nested List View when its tab page is created.
