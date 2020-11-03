@@ -7,5 +7,9 @@
             }
             return caption;
         }
+
+        public static string AddItemCountToTabCaption(string caption, int count) {
+            return $"{caption} ({count})";
+        }
     }
 }
