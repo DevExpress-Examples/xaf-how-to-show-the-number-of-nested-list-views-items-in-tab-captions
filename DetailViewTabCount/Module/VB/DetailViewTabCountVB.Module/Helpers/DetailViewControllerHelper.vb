@@ -6,4 +6,7 @@
 		End If
 		Return caption
 	End Function
+	Public Function AddItemCountToTabCaption(ByVal caption As String, ByVal count As Integer) As String
+		Return $"{caption} ({count})"
+	End Function
 End Module

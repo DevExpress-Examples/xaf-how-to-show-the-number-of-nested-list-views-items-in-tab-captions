@@ -5,8 +5,7 @@ using DetailViewTabCount.Module.BusinessObjects;
 using DevExpress.Persistent.BaseImpl;
 using Task = DetailViewTabCount.Module.BusinessObjects.Task;
 
-namespace DetailViewTabCount.Module.DatabaseUpdate
-{
+namespace DetailViewTabCount.Module.DatabaseUpdate {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
     public class Updater : ModuleUpdater {
         public Updater(IObjectSpace objectSpace, Version currentDBVersion) :
@@ -16,8 +15,7 @@ namespace DetailViewTabCount.Module.DatabaseUpdate
             base.UpdateDatabaseAfterUpdateSchema();
 
             var employee = ObjectSpace.FindObject<Employee>(null);
-            if (employee == null)
-            {
+            if(employee == null) {
                 var maria = ObjectSpace.CreateObject<Employee>();
                 maria.FirstName = "Maria";
                 maria.LastName = "Anders";
