@@ -2,7 +2,7 @@
 using DetailViewTabCount.Module.BusinessObjects;
 using DetailViewTabCount.Module.Helpers;
 using DevExpress.ExpressApp;
-using DevExpress.ExpressApp.Blazor.Editors;
+using DevExpress.ExpressApp.Editors;
 
 namespace DetailViewTabCount.Module.Blazor.Controllers {
     public class EmployeeDetailViewBlazorController : ObjectViewController<DetailView, Employee> {
@@ -15,7 +15,7 @@ namespace DetailViewTabCount.Module.Blazor.Controllers {
             RefreshTabCaptions();
         }
         private void RefreshTabCaptions() {
-            foreach(var item in View.GetItems<BlazorListPropertyEditor>()) {
+            foreach(var item in View.GetItems<ListPropertyEditor>()) {
                 if(item.MemberInfo.GetValue(item.CurrentObject) is ICollection collection) {
                     item.Caption = DetailViewControllerHelper.ClearItemCountInTabCaption(item.Caption);
                     int count = collection.Count;

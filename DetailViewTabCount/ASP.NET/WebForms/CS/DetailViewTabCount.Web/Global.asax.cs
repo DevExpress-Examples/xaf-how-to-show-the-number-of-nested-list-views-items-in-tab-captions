@@ -17,6 +17,7 @@ namespace DetailViewTabCount.Web {
             InitializeComponent();
         }
         protected void Application_Start(Object sender, EventArgs e) {
+            DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.v20_1;
             RouteTable.Routes.RegisterXafRoutes();
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
 #if EASYTEST
