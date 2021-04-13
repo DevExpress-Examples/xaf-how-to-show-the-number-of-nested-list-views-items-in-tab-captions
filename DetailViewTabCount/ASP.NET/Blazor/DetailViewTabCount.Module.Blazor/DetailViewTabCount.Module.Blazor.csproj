@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Deterministic>false</Deterministic>
@@ -22,11 +22,11 @@
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.ExpressApp" Version="20.1.8" />
-    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="20.1.8" />
-    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="20.1.8" />
-    <PackageReference Include="DevExpress.Persistent.Base" Version="20.1.8" />
-    <PackageReference Include="DevExpress.Persistent.BaseImpl" Version="20.1.8" />
+    <PackageReference Include="DevExpress.ExpressApp" Version="20.1.11" />
+    <PackageReference Include="DevExpress.ExpressApp.Blazor" Version="20.1.11" />
+    <PackageReference Include="DevExpress.ExpressApp.Xpo" Version="20.1.11" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="20.1.11" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl" Version="20.1.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Module\CS\DetailViewTabCount.Module\DetailViewTabCount.Module.csproj" />

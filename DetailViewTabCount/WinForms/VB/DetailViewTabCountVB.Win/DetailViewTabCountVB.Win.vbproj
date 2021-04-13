@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -28,8 +28,8 @@
 		</Content>
 	  </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DevExpress.ExpressApp" Version="20.1.8" />
-        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.8-ctp" />
+        <PackageReference Include="DevExpress.ExpressApp" Version="20.1.11" />
+        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.11-ctp" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.1" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
         <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />

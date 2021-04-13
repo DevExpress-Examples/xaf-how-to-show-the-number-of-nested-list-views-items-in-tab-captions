@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
         <OutputType>Library</OutputType>
@@ -26,8 +26,8 @@
 		<EmbeddedResource Include="Model.DesignedDiffs.xafml" />
 	  </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="DevExpress.ExpressApp" Version="20.1.8" />
-      <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.8-ctp" />
+      <PackageReference Include="DevExpress.ExpressApp" Version="20.1.11" />
+      <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.1.11-ctp" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\Module\VB\DetailViewTabCountVB.Module\DetailViewTabCountVB.Module.vbproj" />
