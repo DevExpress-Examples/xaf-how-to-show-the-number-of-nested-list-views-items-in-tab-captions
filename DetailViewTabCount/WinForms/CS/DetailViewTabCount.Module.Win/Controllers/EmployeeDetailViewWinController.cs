@@ -20,6 +20,7 @@ namespace DetailViewTabCount.Module.Win.Controllers {
                 foreach(var item in (IModelLayoutGroup)e.ModelLayoutElement) {
                     if(item is IModelLayoutViewItem layoutViewItem && View.FindItem(layoutViewItem.ViewItem.Id) is ListPropertyEditor propertyEditor) {
                         propertyEditor.Frame.GetController<NestedListViewTabCountController>().Initialize(layoutGroup);
+                        propertyEditor.ValueRead += (s, e) => { propertyEditor.Frame.GetController<NestedListViewTabCountController>().SubscribeToListChanged(); };
                     }
                 }
             }
@@ -43,7 +44,7 @@ namespace DetailViewTabCount.Module.Win.Controllers {
             View.CollectionSource.CollectionReloaded += CollectionSource_CollectionReloaded;
             SubscribeToListChanged();
         }
-        private void SubscribeToListChanged() {
+        internal void SubscribeToListChanged() {
             if(GetBindingList(View.CollectionSource.Collection) is IBindingList bindingList) {
                 bindingList.ListChanged += CollectionSourceBindingList_ListChanged;
             }

@@ -24,6 +24,9 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
                     Dim propertyEditor As ListPropertyEditor = TryCast(View.FindItem(layoutViewItem.ViewItem.Id), ListPropertyEditor)
                     If propertyEditor IsNot Nothing Then
                         propertyEditor.Frame.GetController(Of NestedListViewTabCountController)().Initialize(layoutGroup)
+                        AddHandler propertyEditor.ValueRead, Sub(s, args)
+                                                                 propertyEditor.Frame.GetController(Of NestedListViewTabCountController)().SubscribeToListChanged()
+                                                             End Sub
                     End If
                 Next item
             End If
@@ -48,7 +51,7 @@ Namespace DetailViewTabCountVB.Module.Win.Controllers
             AddHandler View.CollectionSource.CollectionReloaded, AddressOf CollectionSource_CollectionReloaded
             SubscribeToListChanged()
         End Sub
-        Private Sub SubscribeToListChanged()
+        Friend Sub SubscribeToListChanged()
             Dim bindingList = GetBindingList(View.CollectionSource.Collection)
             If TypeOf bindingList Is IBindingList Then
                 AddHandler bindingList.ListChanged, AddressOf CollectionSourceBindingList_ListChanged
