@@ -16,12 +16,10 @@ namespace DetailViewTabCount.Module.Blazor.Controllers {
         }
         private void RefreshTabCaptions() {
             foreach(var item in View.GetItems<ListPropertyEditor>()) {
-                if(item.MemberInfo.GetValue(item.CurrentObject) is ICollection collection) {
-                    item.Caption = DetailViewControllerHelper.ClearItemCountInTabCaption(item.Caption);
-                    int count = collection.Count;
-                    if(count > 0) {
-                        item.Caption = DetailViewControllerHelper.AddItemCountToTabCaption(item.Caption, count);
-                    }
+                item.Caption = DetailViewControllerHelper.ClearItemCountInTabCaption(item.Caption);
+                int count = item.ListView.CollectionSource.GetCount();
+                if(count > 0) {
+                    item.Caption = DetailViewControllerHelper.AddItemCountToTabCaption(item.Caption, count);
                 }
             }
         }
