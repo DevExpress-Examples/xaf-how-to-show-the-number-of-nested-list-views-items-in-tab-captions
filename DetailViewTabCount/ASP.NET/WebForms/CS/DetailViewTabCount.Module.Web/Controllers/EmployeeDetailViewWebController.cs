@@ -17,7 +17,9 @@ namespace DetailViewTabCount.Module.Web.Controllers {
             View.DelayedItemsInitialization = false;
             View.CurrentObjectChanged += View_CurrentObjectChanged;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated += EmployeeDetailViewWebController_PageControlCreated;
-            WebWindow.CurrentRequestWindow.PagePreRender += CurrentRequestWindow_PagePreRender;
+            if(Frame is WebWindow webWindow) {
+                webWindow.PagePreRender += CurrentRequestWindow_PagePreRender;
+            }
         }
         private void EmployeeDetailViewWebController_PageControlCreated(object sender, PageControlCreatedEventArgs e) {
             // Check this Id in the AppName.Module/Model.DesignedDiffs.xafml file
@@ -68,7 +70,9 @@ namespace DetailViewTabCount.Module.Web.Controllers {
         protected override void OnDeactivated() {
             View.CurrentObjectChanged -= View_CurrentObjectChanged;
             ((WebLayoutManager)View.LayoutManager).PageControlCreated -= EmployeeDetailViewWebController_PageControlCreated;
-            WebWindow.CurrentRequestWindow.PagePreRender -= CurrentRequestWindow_PagePreRender;
+            if(Frame is WebWindow webWindow) {
+                webWindow.PagePreRender -= CurrentRequestWindow_PagePreRender;
+            }
             base.OnDeactivated();
         }
     }

@@ -17,7 +17,9 @@ Namespace DetailViewTabCountVB.Module.Web.Controllers
             View.DelayedItemsInitialization = False
             AddHandler View.CurrentObjectChanged, AddressOf View_CurrentObjectChanged
             AddHandler(CType(View.LayoutManager, WebLayoutManager)).PageControlCreated, AddressOf EmployeeDetailViewWebController_PageControlCreated
-            AddHandler WebWindow.CurrentRequestWindow.PagePreRender, AddressOf CurrentRequestWindow_PagePreRender
+            If TypeOf Frame Is WebWindow Then
+                AddHandler CType(Frame, WebWindow).PagePreRender, AddressOf CurrentRequestWindow_PagePreRender
+            End If
         End Sub
         Private Sub EmployeeDetailViewWebController_PageControlCreated(ByVal sender As Object, ByVal e As PageControlCreatedEventArgs)
             If e.Model.Id = "Tabs" Then
@@ -68,7 +70,9 @@ Namespace DetailViewTabCountVB.Module.Web.Controllers
         Protected Overrides Sub OnDeactivated()
             RemoveHandler View.CurrentObjectChanged, AddressOf View_CurrentObjectChanged
             RemoveHandler(CType(View.LayoutManager, WebLayoutManager)).PageControlCreated, AddressOf EmployeeDetailViewWebController_PageControlCreated
-            RemoveHandler WebWindow.CurrentRequestWindow.PagePreRender, AddressOf CurrentRequestWindow_PagePreRender
+            If TypeOf Frame Is WebWindow Then
+                RemoveHandler CType(Frame, WebWindow).PagePreRender, AddressOf CurrentRequestWindow_PagePreRender
+            End If
             MyBase.OnDeactivated()
         End Sub
     End Class
