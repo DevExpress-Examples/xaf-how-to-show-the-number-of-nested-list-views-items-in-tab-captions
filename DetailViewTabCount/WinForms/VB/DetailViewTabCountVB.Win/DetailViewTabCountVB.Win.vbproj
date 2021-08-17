@@ -28,8 +28,8 @@
 		</Content>
 	  </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DevExpress.ExpressApp" Version="20.2.8" />
-        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.2.8-ctp" />
+        <PackageReference Include="DevExpress.ExpressApp" Version="20.2.9" />
+        <PackageReference Include="DevExpress.WindowsDesktop.XAF" Version="20.2.9-ctp" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
         <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
     </ItemGroup>
