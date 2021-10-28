@@ -9,13 +9,11 @@
 In this example, we demonstrate how to show the number of nested List View items in tab captions. You can add, delete, link or unlink items in nested List Views, or move between different records in the Detail View. The record count in tab caption will be automatically updated (for the Tasks detail collection of the Employee class).
 
 ### WinForms
-<img src="./media/example-win.png" width="600">
-
-
+<img src="./media/example-win.png" width="600"> 
+ 
 ### ASP.NET Web Forms & Blazor
-
-<img src="./media/example-web.png" width="600">
-
+<img src="./media/example-web.png" width="600"> 
+ 
 ## Solution
 For implementation details and platform specificities, refer to the following links:
 * [Cross-platform Module](./DetailViewTabCount/Module) | [DetailViewControllerHelper.cs](./DetailViewTabCount/Module/CS/DetailViewTabCount.Module/Helpers/DetailViewControllerHelper.cs) | [Employee.cs](./DetailViewTabCount/Module/CS/DetailViewTabCount.Module/BusinessObjects/Employee.cs)
