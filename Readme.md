@@ -17,7 +17,7 @@ In this example, we demonstrate how to show the number of nested List View items
 <img src="./media/example-web.png" width="600">
 
 ## Solution
-For implementation details, refer to the following links:
+For implementation details and platform specifics, refer to the following links:
 * [Cross-platform Module](./DetailViewTabCount/Module) | [DetailViewControllerHelper.cs](./DetailViewTabCount/Module/CS/DetailViewTabCount.Module/Helpers/DetailViewControllerHelper.cs) | [Employee.cs](./DetailViewTabCount/Module/CS/DetailViewTabCount.Module/BusinessObjects/Employee.cs)
 * [WinForms](./DetailViewTabCount/WinForms) | [EmployeeDetailViewWinController.cs](./DetailViewTabCount/WinForms/CS/DetailViewTabCount.Module.Win/Controllers/EmployeeDetailViewWinController.cs)
 * [ASP.NET Web Forms](./DetailViewTabCount/ASP.NET/WebForms) | [EmployeeDetailViewWebController.cs](./DetailViewTabCount/ASP.NET/WebForms/CS/DetailViewTabCount.Module.Web/Controllers/EmployeeDetailViewWebController.cs)
