@@ -12,11 +12,11 @@ In this example, we demonstrate how to show the number of nested List View items
 
 ### WinForms 
 
-<img src="./media/example-win.png" width="600">
+![Win](./media/example-win.png)  
 
 ### ASP.NET Web Forms & Blazor 
 
-<img src="./media/example-web.png" width="600">
+![Web](./media/example-web.png)  
 
 ## Solution 
 
