@@ -8,7 +8,7 @@ In this example, we demonstrate how to show the number of nested List View items
 
 This solution is intended for tabs that are automatically generated for collection properties. To update captions of tabs created in the Model Editor, use the following solution: <a href="https://supportcenter.devexpress.com/ticket/details/t1084394/xaf-blazor-dashboard-view-count-record-in-nested-listiview">Xaf Blazor - Dashboard View - Count record in nested listiview</a>.
 
-Tab captions are not updated immediately after List View items are changed. Blazor Layout Manager does not have the required API. As a workaround, use the following JavaScript-based solution: <a href="https://supportcenter.devexpress.com/ticket/details/t1050385/blazor-how-to-update-a-layout-item-text-caption-of-a-property-editor-based-on-property">Blazor - How to update a layout item text (Caption of a property editor) based on property value changes</a>
+Tab captions are not updated immediately after List View items are changed. Blazor Layout Manager does not have the required API. As a workaround, use the following JavaScript-based solution: <a href="https://supportcenter.devexpress.com/ticket/details/t1050385/blazor-how-to-update-a-layout-item-text-caption-of-a-property-editor-based-on-property">Blazor - How to update a layout item text (Caption of a property editor) based on property value changes</a>.
 
 <!-- default file list -->
 *Files to look at*:
