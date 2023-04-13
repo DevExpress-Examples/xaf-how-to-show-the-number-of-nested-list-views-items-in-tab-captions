@@ -13,6 +13,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCopyright("Copyright © 2020")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
+<Assembly: System.Runtime.Versioning.SupportedOSPlatform("Windows7.0")>
 
 ' Setting ComVisible to false makes the types in this assembly not visible 
 ' to COM components.  If you need to access a type in this assembly from 
