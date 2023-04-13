@@ -14,9 +14,13 @@ In this example, we demonstrate how to show the number of nested List View items
 
 ![Win](./media/example-win.png)  
 
-### ASP.NET Web Forms & Blazor 
+### ASP.NET Web Forms
 
 ![Web](./media/example-web.png)  
+
+### ASP.NET Core Blazor
+
+![Blazor](./media/example-blazor.png)  
 
 ## Solution 
 
