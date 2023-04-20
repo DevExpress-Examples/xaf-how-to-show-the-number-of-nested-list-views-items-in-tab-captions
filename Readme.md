@@ -11,7 +11,7 @@
 In this example, we demonstrate how to show the number of nested List View items in tab captions. You can add, delete, link or unlink items in nested List Views, or move between different records in the Detail View. The record count in tab caption will be automatically updated (for the Tasks detail collection of the Employee class).
 
 
-![image](https://user-images.githubusercontent.com/14300209/233364788-21ec0419-8dd6-41af-a700-0175987a47ad.png)
+![image](https://user-images.githubusercontent.com/14300209/233367508-7da1912e-ff2e-48b1-b2d4-0d1f7ea93918.png)
 
 ## Solution 
 
