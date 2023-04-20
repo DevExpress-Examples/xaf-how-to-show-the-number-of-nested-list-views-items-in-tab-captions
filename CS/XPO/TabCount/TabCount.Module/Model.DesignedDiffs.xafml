@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Title="TabCount">
+  <NavigationItems StartupNavigationItem="Contact_ListView" />
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="22.2.5.0" IsNewNode="True" />
+  </SchemaModules>
+</Application>
