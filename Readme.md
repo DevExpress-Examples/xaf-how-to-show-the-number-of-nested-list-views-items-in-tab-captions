@@ -8,7 +8,7 @@
 
 ## Scenario 
 
-In this example, we demonstrate how to create a controller to show the number of nested List View items in tab captions. You can add, delete, link or unlink items in nested List Views, or move between different records in the Detail View. The controller automatically updates record count in tab caption.
+In this example, we demonstrate how to create a controller to show the number of nested List View items in tab captions. You can add, delete, link, or unlink items in nested List Views, or move between different records in the Detail View. The controller automatically updates the record count in the tab caption.
 
 
 ![image](https://user-images.githubusercontent.com/14300209/233367508-7da1912e-ff2e-48b1-b2d4-0d1f7ea93918.png)
