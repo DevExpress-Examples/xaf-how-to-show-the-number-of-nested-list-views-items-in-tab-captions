@@ -11,9 +11,9 @@ This example demonstrates how to create a controller to show the number of neste
 
 ## Files to Review
 
-*  [DetailViewControllerHelper.cs](./CS/EFCore/TabCountEF/TabCountEF.Module/DetailViewControllerHelper.cs)  *
-*  [EmployeeDetailViewBlazorController.cs](./CS/EFCore/TabCountEF/TabCountEF.Blazor.Server/Controllers/ContactDetailViewBlazorController.cs) *
-*  [EmployeeDetailViewWinController.cs](./CS/EFCore/TabCountEF/TabCountEF.Win/Controllers/ContactDetailViewWinController.cs ) *
+*  [DetailViewControllerHelper.cs](./CS/EFCore/TabCountEF/TabCountEF.Module/DetailViewControllerHelper.cs)  
+*  [EmployeeDetailViewBlazorController.cs](./CS/EFCore/TabCountEF/TabCountEF.Blazor.Server/Controllers/ContactDetailViewBlazorController.cs) 
+*  [EmployeeDetailViewWinController.cs](./CS/EFCore/TabCountEF/TabCountEF.Win/Controllers/ContactDetailViewWinController.cs ) 
 
 
 ## Documentation
