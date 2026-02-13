@@ -24,7 +24,7 @@ For implementation details, refer to the following links:
 * [ASP.NET Web Forms](./DetailViewTabCount/ASP.NET/WebForms) | [EmployeeDetailViewWebController.cs](./DetailViewTabCount/ASP.NET/WebForms/CS/DetailViewTabCount.Module.Web/Controllers/EmployeeDetailViewWebController.cs)
 * [ASP.NET Core Blazor](./DetailViewTabCount/ASP.NET/Blazor) | [EmployeeDetailViewBlazorController.cs](./DetailViewTabCount/ASP.NET/Blazor/DetailViewTabCount.Module.Blazor/Controllers/EmployeeDetailViewBlazorController.cs)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=xaf-how-to-show-the-number-of-nested-list-views-items-in-tab-captions&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=xaf-how-to-show-the-number-of-nested-list-views-items-in-tab-captions&~~~was_helpful=no)
 
