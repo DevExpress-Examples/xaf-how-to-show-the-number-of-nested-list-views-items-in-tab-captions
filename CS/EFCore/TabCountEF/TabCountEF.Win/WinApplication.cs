@@ -18,7 +18,6 @@ public class TabCountEFWindowsFormsApplication : WinApplication {
 		SplashScreen = new DXSplashScreen(typeof(XafSplashScreen), new DefaultOverlayFormOptions());
         ApplicationName = "TabCountEF";
         CheckCompatibilityType = DevExpress.ExpressApp.CheckCompatibilityType.DatabaseSchema;
-        UseOldTemplates = false;
         DatabaseVersionMismatch += TabCountEFWindowsFormsApplication_DatabaseVersionMismatch;
         CustomizeLanguagesList += TabCountEFWindowsFormsApplication_CustomizeLanguagesList;
     }
